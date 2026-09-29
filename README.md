@@ -30,9 +30,9 @@ python3 -m http.server 8080     # puis http://localhost:8080/
 
 ## Publication
 
-Le workflow `.github/workflows/pages.yml` publie le site à chaque push sur `main`.
-Réglage à faire une seule fois : **Settings → Pages → Build and deployment → Source :
-GitHub Actions**.
+Le workflow `.github/workflows/pages.yml` recopie le site dans la branche `gh-pages` à chaque
+push sur `main`. Réglage à faire une seule fois : **Settings → Pages → Build and deployment →
+Source : Deploy from a branch → Branch : `gh-pages` / `(root)`**.
 
 ## Contenu
 

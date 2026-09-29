@@ -1,45 +1,51 @@
-name: Publier le portfolio sur GitHub Pages
+name: Publier le portfolio
 
-# Le site est statique : aucun build. Le dépôt est publié tel quel, à l'exception
-# des fichiers de travail listés dans l'étape « Préparer le site ».
+# Site statique, aucun build. À chaque push sur main, le workflow recopie les seuls
+# fichiers du site dans la branche gh-pages, que GitHub Pages publie.
+#
+# Réglage à faire une seule fois :
+#   Settings → Pages → Build and deployment → Source : « Deploy from a branch »
+#   → Branch : gh-pages, dossier / (root)
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: publication
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  publier:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Récupérer le dépôt
+      - name: Récupérer main
         uses: actions/checkout@v4
 
-      - name: Activer Pages
-        uses: actions/configure-pages@v5
-        continue-on-error: true
-
-      - name: Préparer le site
-        run: |
-          mkdir _site
-          cp -r index.html 404.html robots.txt sitemap.xml assets _site/
-
-      - name: Empaqueter
-        uses: actions/upload-pages-artifact@v3
+      - name: Récupérer gh-pages
+        uses: actions/checkout@v4
         with:
-          path: _site
+          ref: gh-pages
+          path: _pages
 
-      - name: Déployer
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Copier le site
+        run: |
+          find _pages -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r index.html 404.html robots.txt sitemap.xml assets _pages/
+          touch _pages/.nojekyll
+
+      - name: Publier
+        working-directory: _pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Rien à publier."
+          else
+            git commit -m "Publication depuis ${GITHUB_SHA::7}"
+            git push origin gh-pages
+          fi
