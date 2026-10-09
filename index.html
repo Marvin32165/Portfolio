@@ -180,16 +180,16 @@
         <article class="feature reveal">
             <div class="feature__visual">
                 <div class="browser">
-                    <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i><span>Zabbix — Hosts</span></div>
-                    <img src="assets/img/zabbix-hotes-supervises.png" width="1610" height="330" alt="Liste des hôtes de mon serveur Zabbix : DC01, FS01, IIS01 et le serveur Zabbix, tous actifs, avec leurs modèles Windows et Linux." loading="lazy">
+                    <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i><span>Zabbix — Global view</span></div>
+                    <img src="assets/img/zabbix-global-view.jpg" width="1228" height="458" alt="Tableau de bord Global view de mon serveur Zabbix 7.4 : cinq hôtes supervisés (FS01, DC01, IIS01, le serveur Zabbix et REDMINE01), aucun hôte indisponible et aucun problème ouvert." loading="lazy">
                 </div>
-                <p class="feature__caption">Les quatre machines supervisées : contrôleur de domaine, serveur de fichiers, serveur web et le serveur Zabbix lui-même.</p>
+                <p class="feature__caption">Cinq machines supervisées : contrôleur de domaine, serveur de fichiers, serveur web, serveur de tickets Redmine et le serveur Zabbix lui-même. Aucun problème ouvert.</p>
             </div>
             <div class="feature__text">
                 <p class="lab__n">01 <span>Supervision</span></p>
                 <h3>Supervision avec Zabbix</h3>
                 <dl class="feature__facts">
-                        <div><dt>Monté</dt><dd>Zabbix 7.4 en conteneurs Docker (avec PostgreSQL) sur Ubuntu. Trois serveurs Windows Server 2025 du domaine supervisés par des agents chiffrés (PSK).</dd></div>
+                        <div><dt>Monté</dt><dd>Zabbix 7.4 en conteneurs Docker (avec PostgreSQL) sur Ubuntu. Il supervise trois serveurs Windows Server 2025 du domaine, avec des agents chiffrés (PSK), et un serveur Linux Redmine.</dd></div>
                         <div><dt>Automatisé et testé</dt><dd>Relance automatique d'un service tombé, uniquement sur la machine concernée. Test : j'arrête un service à la main, Zabbix le redémarre et le problème passe en « résolu ».</dd></div>
                         <div><dt>Problème rencontré</dt><dd>Le serveur Zabbix refusait un agent (« identité PSK introuvable ») : l'identité et la clé n'étaient pas identiques des deux côtés. Une fois alignées, les données sont remontées.</dd></div>
                 </dl>
