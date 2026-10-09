@@ -174,33 +174,95 @@
         <div class="section__head reveal">
             <p class="section__num">02 — Labos</p>
             <h2 class="section__title">Six labos, <em>en machines virtuelles.</em></h2>
-            <p class="section__lead">Réalisés pendant la formation, puis refaits à la maison.</p>
+            <p class="section__lead">Réalisés pendant la formation, puis refaits à la maison. Les deux premiers en détail : ce que j'ai monté, testé, et le problème que j'ai dû résoudre.</p>
         </div>
 
-        <div class="labs">
+        <article class="feature reveal">
+            <div class="feature__visual">
+                <div class="browser">
+                    <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i><span>Zabbix — Global view</span></div>
+                    <img src="assets/img/zabbix-tableau-de-bord.jpg" width="1440" height="555" alt="Tableau de bord de mon serveur Zabbix 7.4 : serveur en fonctionnement, hôte disponible, aucun problème ouvert, graphes de mémoire et de processeur." loading="lazy">
+                </div>
+                <p class="feature__caption">Mon serveur Zabbix au premier démarrage, avant l'ajout des machines supervisées.</p>
+            </div>
+            <div class="feature__text">
+                <p class="lab__n">01 <span>Supervision</span></p>
+                <h3>Supervision avec Zabbix</h3>
+                <dl class="feature__facts">
+                        <div><dt>Monté</dt><dd>Serveur Zabbix 7.4 sur Ubuntu avec MySQL. Un poste Windows et une machine Ubuntu supervisés par agent, avec découverte automatique de leurs services.</dd></div>
+                        <div><dt>Automatisé</dt><dd>Quand un service tombe, Zabbix le relance tout seul, sur Windows comme sur Linux, et seulement sur la machine concernée.</dd></div>
+                        <div><dt>Testé</dt><dd>J'arrête un service à la main : le problème s'ouvre, le service redémarre, puis le problème passe en « résolu » au relevé suivant.</dd></div>
+                        <div><dt>Problème rencontré</dt><dd>Un service Windows démarré à la demande s'arrêtait seul après usage, et Zabbix le relançait en boucle. Je l'ai exclu de la découverte des services.</dd></div>
+                </dl>
+                <div class="lab__tags"><span class="tag">Zabbix</span><span class="tag">Ubuntu</span><span class="tag">MySQL</span><span class="tag">Windows</span></div>
+            </div>
+        </article>
+
+        <article class="feature feature--flip reveal">
+            <div class="feature__visual">
+                <div class="feature__frame">
+                    <svg class="feature__diagram" viewBox="0 0 580 360" role="img" aria-labelledby="schema-cluster-titre">
+                            <title id="schema-cluster-titre">Schéma du lab : un contrôleur de domaine et le rôle serveur de fichiers sur le réseau LAN, deux nœuds de cluster reliés par un réseau dédié, et un serveur de stockage iSCSI sur un troisième réseau.</title>
+                            <rect class="d-band d-band--lan" x="12" y="12" width="556" height="104" rx="12"/>
+                            <rect class="d-band d-band--clu" x="12" y="126" width="556" height="88" rx="12"/>
+                            <rect class="d-band d-band--san" x="12" y="224" width="556" height="124" rx="12"/>
+                            <text class="d-net" x="28" y="34">RÉSEAU LAN</text>
+                            <text class="d-net" x="28" y="148">RÉSEAU CLUSTER</text>
+                            <text class="d-net" x="28" y="246">RÉSEAU iSCSI</text>
+
+                            <rect class="d-box" x="28" y="48" width="160" height="52" rx="8"/>
+                            <text class="d-name" x="44" y="70">DC01</text>
+                            <text class="d-sub" x="44" y="88">Active Directory, DNS</text>
+
+                            <rect class="d-box" x="28" y="258" width="180" height="76" rx="8"/>
+                            <text class="d-name" x="44" y="280">SAN01</text>
+                            <text class="d-sub" x="44" y="298">Cible iSCSI</text>
+                            <text class="d-sub" x="44" y="316">Données 20 Go · quorum 2 Go</text>
+
+                            <rect class="d-node" x="228" y="74" width="128" height="260" rx="10"/>
+                            <rect class="d-node" x="430" y="74" width="128" height="260" rx="10"/>
+                            <text class="d-name" x="292" y="100" text-anchor="middle">CLU01</text>
+                            <text class="d-sub" x="292" y="117" text-anchor="middle">Windows Server 2025</text>
+                            <text class="d-name" x="494" y="100" text-anchor="middle">CLU02</text>
+                            <text class="d-sub" x="494" y="117" text-anchor="middle">Windows Server 2025</text>
+
+                            <rect class="d-role" x="228" y="26" width="330" height="36" rx="18"/>
+                            <text class="d-role-t" x="393" y="49" text-anchor="middle">Rôle serveur de fichiers — passe d'un nœud à l'autre</text>
+
+                            <line class="d-link d-link--hb" x1="360" y1="176" x2="426" y2="176"/>
+                            <text class="d-sub" x="393" y="194" text-anchor="middle">heartbeat</text>
+                            <text class="d-sub" x="292" y="290" text-anchor="middle">initiateur iSCSI</text>
+                            <text class="d-sub" x="494" y="290" text-anchor="middle">initiateur iSCSI</text>
+                            <line class="d-link" x1="208" y1="296" x2="228" y2="296"/>
+                        </svg>
+                </div>
+                <p class="feature__caption">Trois réseaux séparés : utilisateurs, communication du cluster, stockage.</p>
+            </div>
+            <div class="feature__text">
+                <p class="lab__n">02 <span>Stockage &amp; haute disponibilité</span></p>
+                <h3>SAN iSCSI et cluster de basculement</h3>
+                <dl class="feature__facts">
+                        <div><dt>Monté</dt><dd>Un contrôleur de domaine, un serveur de stockage iSCSI et deux nœuds Windows Server 2025 en cluster, avec un rôle serveur de fichiers et un disque témoin de quorum.</dd></div>
+                        <div><dt>Testé</dt><dd>J'arrête brutalement le nœud actif pendant que le partage est ouvert : le serveur de fichiers passe quelques secondes en attente, puis le partage refonctionne sur l'autre nœud.</dd></div>
+                        <div><dt>Problème rencontré</dt><dd>Le disque de données était déclaré en volume partagé de cluster (CSV) : le rôle serveur de fichiers ne pouvait pas l'utiliser. Je l'ai retiré des CSV, puis j'ai créé le rôle.</dd></div>
+                </dl>
+                <div class="lab__tags"><span class="tag">iSCSI</span><span class="tag">Failover</span><span class="tag">Quorum</span><span class="tag">Windows Server</span></div>
+            </div>
+        </article>
+
+        <h3 class="labs__sub reveal">Les autres labos</h3>
+        <div class="labs labs--four">
             <article class="lab reveal">
-                <p class="lab__n">01 <span>Windows Server</span></p>
+                <p class="lab__n">03 <span>Windows Server</span></p>
                 <h3>Domaine Active Directory</h3>
                 <p>Serveurs déployés depuis une image Sysprep, contrôleur de domaine, utilisateurs et groupes, DNS, DHCP et GPO.</p>
                 <div class="lab__tags"><span class="tag">AD DS</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">GPO</span></div>
             </article>
-            <article class="lab reveal" style="--d:.06s">
-                <p class="lab__n">02 <span>Stockage</span></p>
-                <h3>SAN iSCSI et cluster de basculement</h3>
-                <p>Stockage partagé en iSCSI et cluster Windows Server à deux nœuds, avec test de bascule.</p>
-                <div class="lab__tags"><span class="tag">iSCSI</span><span class="tag">Failover</span><span class="tag">Quorum</span></div>
-            </article>
             <article class="lab reveal" style="--d:.12s">
-                <p class="lab__n">03 <span>Réseau</span></p>
+                <p class="lab__n">04 <span>Réseau</span></p>
                 <h3>Réseau Cisco sécurisé</h3>
                 <p>VLAN, routage inter-VLAN, accès SSH et filtrage par ACL, sur Packet Tracer puis sur matériel réel.</p>
                 <div class="lab__tags"><span class="tag">VLAN</span><span class="tag">STP</span><span class="tag">ACL</span><span class="tag">SSH</span></div>
-            </article>
-            <article class="lab reveal">
-                <p class="lab__n">04 <span>Supervision</span></p>
-                <h3>Supervision avec Zabbix</h3>
-                <p>Serveur Zabbix sur Ubuntu, agents Windows et Linux, alertes et relance automatique des services tombés.</p>
-                <div class="lab__tags"><span class="tag">Zabbix</span><span class="tag">Ubuntu</span><span class="tag">Windows</span></div>
             </article>
             <article class="lab reveal" style="--d:.06s">
                 <p class="lab__n">05 <span>Virtualisation</span></p>
