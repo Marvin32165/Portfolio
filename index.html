@@ -191,7 +191,7 @@
                 <dl class="feature__facts">
                         <div><dt>Monté</dt><dd>Zabbix 7.4 en conteneurs Docker (avec PostgreSQL) sur Ubuntu. Il supervise trois serveurs Windows Server 2025 du domaine, avec des agents chiffrés (PSK), et un serveur Linux Redmine.</dd></div>
                         <div><dt>Automatisé et testé</dt><dd>Relance automatique d'un service tombé, uniquement sur la machine concernée. Test : j'arrête un service à la main, Zabbix le redémarre et le problème passe en « résolu ».</dd></div>
-                        <div><dt>Problème rencontré</dt><dd>Le serveur Zabbix refusait un agent (« identité PSK introuvable ») : l'identité et la clé n'étaient pas identiques des deux côtés. Une fois alignées, les données sont remontées.</dd></div>
+                        <div><dt>Problème rencontré</dt><dd>Le serveur Zabbix ne trouvait pas les serveurs Windows par leur nom, alors que le DNS du domaine répondait bien. Sous Ubuntu, les noms en .local ne sont envoyés au DNS que si le domaine est déclaré dans la configuration réseau : je l'ai ajouté.</dd></div>
                 </dl>
                 <div class="lab__tags"><span class="tag">Zabbix</span><span class="tag">Docker</span><span class="tag">PostgreSQL</span><span class="tag">Windows Server</span></div>
             </div>
