@@ -491,7 +491,8 @@ a.contact__item:hover { background: rgba(243, 207, 166, .14); border-color: var(
 
 @media (max-width: 860px) {
     .feature { grid-template-columns: minmax(0, 1fr); }
-    .feature--flip .feature__visual { order: 0; }
+    .feature .feature__visual, .feature--flip .feature__visual { order: 2; }
+    .feature + .feature { padding-top: 40px; border-top: 1px solid var(--line); }
     .nav-toggle { display: inline-flex; }
     .nav {
         position: absolute; left: 0; right: 0; top: var(--header-h); background: var(--cream);
