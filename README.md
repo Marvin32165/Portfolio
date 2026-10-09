@@ -10,11 +10,12 @@ parcours, projet et labos.
 HTML, CSS et JavaScript natifs. Aucune dépendance, aucun outil de build.
 
 ```
-index.html              La page (sections : profil, compétences, parcours, projet, labos, méthode, contact)
+index.html              La page (sections : accueil, compétences, labos, contact)
 404.html                Page d'erreur
 assets/css/style.css    Toute la mise en forme (jetons de couleur en tête de fichier)
 assets/js/main.js       Menu mobile, section active, apparition au défilement, onglets, copie de l'e-mail
-assets/img/             Favicon, image de partage et captures du centre d'apprentissage
+assets/img/             Favicon et image de partage
+assets/cv/              CV téléchargeable (version publique, sans téléphone)
 outils/                 Génération des images et vérification dans un navigateur (non publiés)
 .github/workflows/      Publication sur GitHub Pages à chaque push sur main
 ```
@@ -36,6 +37,5 @@ Source : Deploy from a branch → Branch : `gh-pages` / `(root)`**.
 
 ## Contenu
 
-Les informations viennent du CV. Rien de confidentiel : pas de numéro de téléphone, pas
-d'adresse postale, pas de lettre de candidature. Le projet « Centre d'apprentissage IT »
-est décrit et illustré par des captures ; son dépôt, qui contient des notes de labo, reste privé.
+Version courte : accueil avec téléchargement du CV, compétences, six labos, contact. Rien de
+confidentiel : pas de numéro de téléphone ni d'adresse postale, y compris dans le CV publié.
